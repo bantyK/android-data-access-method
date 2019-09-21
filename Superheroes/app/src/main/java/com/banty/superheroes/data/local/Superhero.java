@@ -1,6 +1,7 @@
 package com.banty.superheroes.data.local;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.provider.BaseColumns;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,20 @@ public class Superhero {
         if (values.containsKey(COLUMN_PLAYED_BY)) {
             superhero.playedBy = values.getAsString(COLUMN_PLAYED_BY);
         }
+
+        return superhero;
+    }
+
+    public static Superhero getSuperheroFromCursor(Cursor cursor) {
+
+        Superhero superhero = new Superhero();
+
+        superhero.id = cursor.getLong(cursor.getColumnIndexOrThrow(Superhero.COLUMN_ID));
+        superhero.name = cursor.getString(cursor.getColumnIndexOrThrow(Superhero.COLUMN_NAME));
+        superhero.franchise = cursor.getString(cursor.getColumnIndexOrThrow(Superhero.COLUMN_FRANCHISE));
+        superhero.imageUrl = cursor.getString(cursor.getColumnIndexOrThrow(Superhero.COLUMN_IMAGE_URL));
+        superhero.playedBy = cursor.getString(cursor.getColumnIndexOrThrow(Superhero.COLUMN_PLAYED_BY));
+        superhero.realName = cursor.getString(cursor.getColumnIndexOrThrow(Superhero.COLUMN_REAL_NAME));
 
         return superhero;
     }

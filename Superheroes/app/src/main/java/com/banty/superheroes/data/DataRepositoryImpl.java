@@ -25,7 +25,7 @@ public class DataRepositoryImpl implements DataRepository {
 
     @Override
     public void getSuperheroes(final DataRepositoryCallback callback) {
-        if(isCacheDirty) {
+        if (isCacheDirty) {
             fetchDataFromRemote(callback);
         }
         localDataRepository.getSuperheroes(new DataRepositoryCallback() {
@@ -37,7 +37,7 @@ public class DataRepositoryImpl implements DataRepository {
             @Override
             public void superheroesFailedToLoad(String message) {
                 Log.d("Tag##", "Data not present in local storage");
-                remoteDataRepository.getSuperheroes(callback);
+                fetchDataFromRemote(callback);
             }
         });
     }
@@ -61,11 +61,27 @@ public class DataRepositoryImpl implements DataRepository {
 
     @Override
     public void saveSuperheroes(List<Superhero> superheroes) {
+        Log.d("Tag##", "Saving data into local");
         localDataRepository.saveSuperheroes(superheroes);
     }
 
     @Override
     public void refreshCache() {
         isCacheDirty = true;
+    }
+
+    @Override
+    public void getSuperheroById(Long id, final SingleItemCallback callback) {
+        localDataRepository.getSuperheroById(id, new SingleItemCallback() {
+            @Override
+            public void superheroLoaded(Superhero superhero) {
+                callback.superheroLoaded(superhero);
+            }
+
+            @Override
+            public void superheroFailedToLoad(String message) {
+                callback.superheroFailedToLoad(message);
+            }
+        });
     }
 }

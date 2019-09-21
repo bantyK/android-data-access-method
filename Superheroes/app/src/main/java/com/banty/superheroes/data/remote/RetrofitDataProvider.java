@@ -10,11 +10,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-class RetrofitDataProvider implements RemoteDataProvider {
+public class RetrofitDataProvider implements RemoteDataProvider {
 
     private final SuperheroApi api;
 
-    RetrofitDataProvider(SuperheroApi api) {
+    public RetrofitDataProvider(SuperheroApi api) {
         this.api = api;
     }
 

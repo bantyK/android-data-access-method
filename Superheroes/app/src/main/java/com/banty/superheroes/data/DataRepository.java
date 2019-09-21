@@ -13,6 +13,11 @@ public interface DataRepository {
         void superheroesFailedToLoad(String message);
     }
 
+    public interface SingleItemCallback {
+        void superheroLoaded(Superhero superhero);
+
+        void superheroFailedToLoad(String message);
+    }
 
 
     void getSuperheroes(DataRepositoryCallback callback);
@@ -20,6 +25,8 @@ public interface DataRepository {
     void saveSuperheroes(List<Superhero> superheroes);
 
     void refreshCache();
+
+    void getSuperheroById(Long id, SingleItemCallback callback);
 
 }
 
